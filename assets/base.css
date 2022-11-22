@@ -3006,3 +3006,64 @@ details-disclosure > details {
     outline: transparent solid 1px;
   }
 }
+
+/* Animations */
+
+.scroll-trigger {
+  transition: opacity 0.55s ease-in-out;
+  opacity: 0;
+}
+
+.scrolled-into-view {
+  animation: 0.55s ease-in-out slideIn forwards;
+  animation-delay: calc(var(--animation-order) * 100ms);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(10vh);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Section-specific motion behavior. */
+
+.banner__media.scroll-trigger {
+  transition: opacity var(--duration-long) ease-in-out;
+  opacity: 0;
+}
+
+.banner__media.scrolled-into-view {
+  animation: none;
+  opacity: 1;
+}
+
+.slideshow__slide:not(:first-of-type) .banner__media.scroll-trigger {
+  opacity: 1;
+}
+
+/* Async loading prevents animation for Related Product cards. */
+.related-products .grid__item .scroll-trigger {
+  opacity: 1;
+  animation: none;
+}
+
+/* Turn off animations if JS is turned off. */
+.no-js .scroll-trigger,
+.no-js .scrolled-into-view {
+  opacity: 1;
+  animation: none;
+}
+
+/* Respect the visitor's motion preferences. */
+@media (prefers-reduced-motion) {
+  .scroll-trigger,
+  .scrolled-into-view {
+    opacity: 1;
+    animation: none;
+  }
+}
